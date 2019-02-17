@@ -5,10 +5,9 @@ import launchesJson from '../../assets/data/launches.json';
   selector: 'app-agencies-container',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <app-search
-      (eventSearchAgencies)="onSearchAgencies($event)">,
-      (eventSearchMissions)="onSearchMissions($event)">
-    </app-search>
+    <app-agencies-search
+      (eventSearchAgencies)="onSearchAgencies($event)">
+    </app-agencies-search>
     <app-launches-display [launches]="launchesResult"> </app-launches-display>
   `
   ,
@@ -40,24 +39,4 @@ export class AgenciesContainerComponent implements OnInit {
     this.launchesResult = this.launch;
 
   }
-
-  onSearchMissions(textToSearch: string) {
-    this.launch = [];
-
-    if (textToSearch.length) {
-      for (let i = 0; i < launchesJson.count; i++) {
-        if (launchesJson.launches[i].missions){
-          for (let x = 0; x < launchesJson.launches[i].missions.length; x++) {
-            if ((launchesJson.launches[i].missions[x].name.toLowerCase().search(textToSearch.toLowerCase()) !== -1)
-             || (launchesJson.launches[i].missions[x].description.toLowerCase().search(textToSearch.toLowerCase()) !== -1)){
-              this.launch.push(launchesJson.launches[i]);
-            }
-          }
-        }
-      }
-    }
-
-    this.launchesResult = this.launch;
-  }
-
 }
